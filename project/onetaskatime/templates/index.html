@@ -1,0 +1,110 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Homepage
+{% endblock %}
+
+{% block main %}
+  <!--html for slideshow heavily modified from https://www.w3schools.com/howto/howto_js_slideshow.asp-->
+  <div class="flex-container">
+    <div class="slideshow-container">
+      {% if goals == [] %}
+        <div class="title">No goals to display!</div>
+      {% endif %}
+      {% for goal in goals %}
+      <!--Creates the "slide" in the slideshow for each goal in the goals list-->
+        <div class="mySlides">
+          <div class="numbertext">Total # of main goals: {{ goal_number }}</div>
+          <!--Finding sum of elements in list using jinja source: https://stackoverflow.com/questions/25525101/sum-elements-of-the-list-in-jinja-2-->
+          <div class="totaltime">Main goals total time: {{ subgoals | sum(attribute="time_planned") }} minutes</div>
+          <div class="title">{{ goal.maingoal }}</div>
+          <form action="/" method="post">
+            <!--hover tooltip source: https://stackoverflow.com/questions/2238239/tooltips-for-button-->
+            <input title="removes finished main goal and related subgoals (if any) from list" class="center finish-main" name="choose" type="submit" value="Finished Main Goal">
+            <input hidden type="number" name="maingoal_id" value="{{ goal.id }}">
+          </form>
+          <hr>
+          <form action="/" method="post">
+            <table class="table subgoals">
+              <tr>
+                <th>Subgoal</th>
+                <th>Est. Time (min)</th>
+                <th class="choose-goal">Select Subgoal</th>
+              </tr>
+              {% for subgoal in subgoals %}
+                {% if subgoal.maingoal_id == goal.id %}
+                  <tr>
+                    <td>{{ subgoal.subgoal }}</td>
+                    <td>{{ subgoal.time_planned }}</td>
+                    <td class="choose-goal">
+                      <input name="subgoal_id" type="radio" value="{{ subgoal.id }}" required>
+                    </td>
+                  </tr>
+                {% endif %}
+              {% endfor %}
+            </table>
+            <input class="submit-goal" name="choose" type="submit" value="Start Timer"></td>
+          </form>
+        </div>
+      {% endfor %}
+
+      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+      <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+    <div class="right-col">
+      <div>
+        <!-- Maingoals -->
+        <h4>Delete Main Goals</h4>
+        <form action="/" method="post">
+            <!-- Adds dropdown list for main goals if there are maingoals to display at all -->
+              {% if goals == [] %}
+                <p>No main goals to delete!</p>
+              {% else %}
+                <select class="form-control" name="maingoal_selected" required>
+                  <option disabled selected value="">Select Maingoal</option>
+                  {% for goal in goals %}
+                      <option value="{{ goal.id }}">{{ goal.maingoal }}</option>
+                  {% endfor %}
+                </select>
+                <input class="delete-button" type="submit" name="choose" value="Delete Maingoal">
+              {% endif %}
+        </form>
+      </div>
+      <div class="main-goals">
+      <h4>Delete Sub Goals</h4>
+      <form action="/" method="post">
+        <!--Does not display dropdown menu if there are no subgoals-->
+        {% if subgoals == [] %}
+          <p>No subgoals to delete!</p>
+        {% else %}
+        <!--Creates dropdown menu of subgoals that user can delete-->
+          <select name="list_subgoals" class="form-control goals" required>
+            <option disabled selected value="">Select Subgoal</option>
+            <!--Creates label to show which main goal each subgoal falls under-->
+            {% for goal in goals %}
+                <optgroup label="{{ goal.maingoal }}">
+              {% for subgoal in subgoals %}
+                {% if subgoal.maingoal_id == goal.id %}
+                  <option value="{{ subgoal.id }}">{{ subgoal.subgoal }}</option>
+                {% endif %}
+              {% endfor %}
+            {% endfor %}
+        </select>
+        <input class="delete-button" type="submit" name="choose" value="Delete Subgoal">
+        {% endif %}
+      </form>
+      </div>
+      <div class="main-goals">
+      <h4>Main Goals</h4>
+      <hr><br>
+      <!--Displays base list of main goals-->
+      {% for goal in goals %}
+        <ul>
+          <li>{{ goal.maingoal }}</li>
+        </ul>
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+  <script src="/static/slideshow.js"></script>
+{% endblock %}

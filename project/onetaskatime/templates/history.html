@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Stats and History
+{% endblock %}
+
+{% block main %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+    <h1>Stats and History of Completed Goals</h1>
+    <br><br>
+    <form action="/history" method="POST">
+        <div class="form-group">
+        <!-- users select time range -->
+        <select class="form-control" name="time_range">
+            <option disabled selected value="">Time Range</option>
+            <option value="6">The Past Week</option>
+            <option value="29">The Past Month</option>
+        </select>
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+
+    <!-- If past week -->
+    <br>
+    {% if time_range == 6 %}
+        <h2>You haven't completed any tasks over the past week. Gotta step up the game!</h2>
+    <!-- If past month  -->
+    {% elif time_range == 29 %}
+        <h2>You haven't completed any tasks over the past month. We miss you a lot!</h2>
+    {% endif %}
+
+
+{% endblock %}
+

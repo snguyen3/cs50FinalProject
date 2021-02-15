@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Clock Out
+{% endblock %}
+
+{% block main %}
+    <h1>Tasks Completed</h1>
+    <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Main Goal</th>
+                <th scope="col">Subgoal</th>
+                <th scope="col">Time Planned</th>
+                <th scope="col">Time Spent</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Simple Implementation for tasks done today-->
+            {% for maingoal in maingoals %}
+                {% for subgoal in subgoals %}
+                    {% if subgoal.maingoal_id == maingoal.id %}
+                        <tr>
+                            <th>{{ maingoal.maingoal }}</th>
+                            <td>{{ subgoal.subgoal }}</td>
+                            <td>{{ subgoal.time_planned }} minutes</td>
+                            <td>{{ subgoal.time_spent }} minutes</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
+    <br><br>
+    <!-- Dynamic end sentences to show how much work done -->
+    {% if time_spent == 0 and total_tp == 0 %}
+        <h3>You haven't completed any tasks yet!</h3>
+    {% elif time_spent > total_tp %}
+        <h3>You completed {{ num_of_goals }} goals today. It took you {{ time_spent }} minutes to complete {{ total_tp }} minutes of work. Try to complete your goals in the time you allotted! You could try to split up your main goal into more specific subgoals.</h3>
+    {% elif time_spent == total_tp %}
+        <h3>You completed {{ num_of_goals }} goals today. It took you {{ time_spent }} minutes to complete {{ total_tp }} minutes of work. Right on target! Keep up the good work!!</h3>
+    {% elif time_spent < total_tp %}
+        <h3>You completed {{ num_of_goals }} goals today. It took you {{ time_spent }} minutes to complete {{ total_tp }} minutes of work! Great job!</h3>
+    {% endif %}
+    <br><br>
+
+    <!-- Log out button -->
+    <form action="/clockout" method="post">
+        <input type="submit" name="logout" value="Log Out" class="delete-button">
+    </form>
+{% endblock %}

@@ -1,0 +1,176 @@
+/* CSS style code for carousel/slideshow taken from https://www.w3schools.com/howto/howto_js_slideshow.asp and modified*/
+
+* {box-sizing: border-box;}
+body {font-family: Verdana, sans-serif; margin:0;}
+.mySlides {
+  display: none;
+}
+
+hr {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+/*Table design formatting*/
+th, td
+{
+    width: 100%;
+    border: 1px solid black;
+    text-align: center;
+}
+
+/* Slideshow container */
+.slideshow-container {
+  width: 500px;
+  min-height: 600px;
+  position: relative;
+  border: solid black;
+  border-radius: 12px;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: black;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  user-select: none;
+  background-color: white;
+}
+
+/* Position the "previous button" to the left*/
+.prev {
+  left: -45px;
+  border-radius: 3px 0 0 3px;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: -45px;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* Stylization for main goal name in slideshow */
+.title {
+  font-size: 20px;
+  padding: 8px 12px;
+  position: relative;
+  text-align: left;
+}
+
+/* Gives padding in the right column of the main page */
+.main-goals {
+  margin-top: 75px;
+}
+
+/* Caption text */
+.subgoals {
+  display: block;
+  color: black;
+  font-size: 15px;
+  text-align: left;
+  width: 100%;
+}
+
+/* Number text (Total number of main goals) */
+.numbertext {
+  color: black;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+/* Total time of main goals displayed at bottom of slideshow */
+.totaltime {
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  color: black;
+  font-size: 12px;
+  padding: 8px 12px;
+}
+
+/* Stylization for delete buttons on main page and log out button on clock out page */
+.delete-button {
+  margin: 5px;
+  border-radius: 4px;
+  border-color: gray;
+  background-color: #ECEFF1;
+}
+
+.delete-button:hover {
+  background-color: #B3B6B7;
+}
+
+
+/*Finished main goals button customization*/
+.finish-main {
+  margin: 5px;
+  border-radius: 8px;
+  border-color: gray;
+  background-color: #E2FFFF;
+}
+
+.finish-main:hover {
+  background-color: #C9FFFF;
+}
+
+.choose-goal {
+  width: 50px;
+}
+
+/*index page container customization*/
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+/*sets padding for right side of flex container*/
+.right-col {
+  padding: 0 50px;
+}
+
+/* Start timer button customization */
+.submit-goal {
+  position: absolute;
+  right: 0;
+  margin: 4px 4px;
+  border-radius: 8px;
+  border-color: gray;
+  background-color: #98DBF7;
+}
+
+.submit-goal:hover {
+  background-color: #59CAF9;
+}
+
+/* On smaller screens, reformat layout */
+@media only screen and (min-width: 480px) and (max-width: 950px) {
+    .flex-container{flex-direction: column}
+    .slideshow-container{margin: auto; max-width: 500px;}
+    .right-col{padding: 30px 50px}
+}
+
+@media only screen and (max-width: 480px) {
+  .prev, .next, .text {font-size: 11px}
+  .prev {left: -41px;}
+  .next {right: -41px}
+  .flex-container{flex-direction: column}
+  .slideshow-container{margin: auto; max-width: 390px;}
+  .right-col{padding: 30px 50px}
+}

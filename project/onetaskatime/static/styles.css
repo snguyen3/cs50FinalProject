@@ -1,0 +1,123 @@
+/* base styles.css taken from finance pset but modified*/
+
+nav .navbar-brand
+{
+    /* size for brand */
+    font-size: 36px;
+    font-family: 'Comic Sans MS', cursive;
+    text-align: center;
+}
+
+/* Colors for brand */
+nav .navbar-brand .blue
+{
+    color: #0EE3E2;
+}
+
+main .form-control
+{
+    /* Center form controls */
+    display: inline-block;
+
+    /* Override Bootstrap's 100% width for form controls */
+    width: auto;
+
+}
+
+main
+{
+    /* Scroll horizontally as needed */
+    overflow-x: auto;
+
+    /* Center contents */
+    text-align: center;
+
+}
+
+main img
+{
+    /* Constrain images on small screens */
+    max-width: 100%;
+}
+
+ul {
+    display: block;
+    text-align: left;
+}
+
+pg-position {
+    top: 25px;
+    left: 25px;
+}
+
+/* some footer customization taken from: https://www.w3schools.com/howto/howto_css_fixed_footer.asp*/
+footer {
+    text-align: center;
+    background-color: #477ADC;
+    color: white;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    font-size: 10px;
+    margin-bottom: -10px;
+}
+
+table {
+    table-layout: fixed;
+}
+
+/*Alert button CSS taken/adapted from: https://www.w3schools.com/howto/howto_js_alert.asp*/
+/* The alert message box */
+.alert {
+  padding: 20px;
+  color: black;
+  margin-bottom: 15px;
+}
+
+.alert.warning {
+    background-color: #E4D137;
+}
+
+.alert.success {
+    background-color: #DAF7A6;
+}
+
+/* The close button */
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn:hover {
+  color: black;
+}
+
+/* Default button mainly for timer page */
+.button1 {
+   border: solid gray 0.5px;
+   background-color: #F4F4F2;
+   margin: 5px 10px;
+}
+
+/*button hover stylization*/
+.button1:hover {
+  background-color: gray;
+  color: white;
+}
+
+.button1.stop:hover {
+    background-color: #C72C20;
+}
+
+.button1.finish:hover {
+    background-color: #2B8A22;
+}

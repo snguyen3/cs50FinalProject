@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Add Goals
+{% endblock %}
+
+{% block main %}
+    <!-- Add maingoals -->
+    <p>Add Maingoals Here</p>
+    <form action="/addgoal" method="post">
+        <div class="form-group">
+            <input class="form-control" name="maingoal" autocomplete="off" placeholder="What is your main goal?" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">Submit Goal</button>
+    </form>
+
+    <!-- Subgoals -->
+    <div></div>
+    <br>
+    <p>Add Subgoals Here</p>
+    <form action="/addgoal" method="post">
+        <!-- Add dropdown list for main goals -->
+        <div class="form-group">
+            <select class="form-control" name="maingoals_selected">
+                <option disabled selected value="">Main Goal</option>
+                {% for goal in goals %}
+                    <option value="{{ goal.id }}">{{ goal.maingoal }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Adding subgoals -->
+        <div class="form-group">
+            <input class="form-control" name="subgoal" placeholder="Subgoal" autocomplete="off" type="text">
+            <input class="form-control" name="subgoal_time" placeholder="Time Allotted (in minutes)" type="number">
+        </div>
+
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+    <br><br>
+    <a href="/" class="btn button1" style="border: solid black">Back to main page</a>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block title %}
+   Week/Month Stats
+{% endblock %}
+
+{% block main %}
+
+    {% if time_range == 6 %}
+        <h1>For the past week: </h1>
+    {% elif time_range == 29 %}
+        <h1>For the past month: </h1>
+    {% endif %}
+    <br>
+    <!-- If total time planned < total time spent -->
+    {% if summary.total_tp < summary.total_ts %}
+        <p>
+            On {{ summary.day_num }} day(s), you completed {{ summary.goal_num }} tasks. Give yourself a pat on the back!
+            You spent a total of {{ summary.total_ts }} min on your goal(s), which is {{ summary.percent_diff }}% higher than your estimated time, {{ summary.total_tp }} min.
+            On average, you spent {{ summary.avg_time_diff }} more min per workday. Don't be upset though. It's never too late to improve your
+            productivity! Check out the day-to-day breakdown below for more details!
+
+        </p>
+    <!-- If total time planned = total time spent -->
+    {% elif summary.total_tp == summary.total_ts %}
+        <p>
+            On {{ summary.day_num }} day(s), you completed {{ summary.goal_num }} tasks. Give yourself a pat on the back!
+            Miraculously, the total amount time you spent on your goals is exactly the same as what you had planned -- both being {{ summary.total_tp }} min.
+            Does that mean you have a good grasp of your productivity? Check out the day-to-day breakdown below for more details!
+        </p>
+    <!-- If total time planned > total time spent -->
+    {% elif summary.total_ts < summary.total_tp %}
+        <p>
+            On {{ summary.day_num }} day(s), you completed {{ summary.goal_num }} tasks. Give yourself a pat on the back!
+            You spent a total of {{ summary.total_ts }} min on your goal(s), which is {{ summary.percent_diff }}% lower than your estimated time: {{ summary.total_tp }} min.
+            On average, you saved {{ summary.avg_time_diff }} min per workday. Congrats!
+            Check out the day-to-day breakdown below for more details!
+        </p>
+    {% endif %}
+
+    <input hidden id="date_list" value="{{ date_list }}">
+    <input hidden id="tp_list" value="{{ tp_list }}">
+    <input hidden id="ts_list" value="{{ ts_list }}">
+
+    <br>
+    <!-- Graph with Chart.js, https://www.chartjs.org/docs/latest/charts/line.html, a graphing library powered by MIT-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.bundle.js"></script>
+    <canvas id="myChart" width="75" height="50"></canvas>
+    <script src="/static/graph.js"></script>
+
+    <a class="btn button1" href="/">Return to Homepage</a>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

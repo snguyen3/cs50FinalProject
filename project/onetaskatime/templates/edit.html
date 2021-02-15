@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Edit Goals
+{% endblock %}
+
+{% block main %}
+    <p>Edit the name of your maingoals</p>
+    <form action="/edit" method="post">
+        <!-- Add dropdown list for main goals -->
+        <div class="form-group">
+            {% if maingoals == [] %}
+                <p>No main goals to edit!</p>
+            {% else %}
+            <select class="form-control" name="maingoal">
+                <option disabled selected value="">Main Goal</option>
+                {% for maingoal in maingoals %}
+                    <option value="{{ maingoal.id }}">{{ maingoal.maingoal }}</option>
+                {% endfor %}
+            {% endif %}
+            </select>
+        </div>
+        {% if maingoals == [] %}
+             <p>Add one <a href="/addgoal#:~:text=Add%20Maingoals%20Here">here.</a></p>
+        {% else %}
+        <input class="form-control" name="new_maingoal_name" placeholder="New Name" autocomplete="off" type="text">
+        <button class="btn btn-primary" type="submit">Submit Goal</button>
+        {% endif %}
+    </form>
+    <!-- Subgoals -->
+    <div></div>
+    <br>
+    <p>Edit your subgoals</p>
+        <form action="/edit" method="post">
+            {% if subgoals == [] %}
+                <p>No subgoals to edit!</p>
+            {% else %}
+            <select name="subgoal" class="form-control" required>
+            <option disabled selected value="">Select Subgoal</option>
+                {% for maingoal in maingoals %}
+                    <optgroup label="{{ maingoal.maingoal }}">
+                        {% for subgoal in subgoals %}
+                            {% if subgoal.maingoal_id == maingoal.id %}
+                                <option value="{{ subgoal.id }}">{{ subgoal.subgoal }} - Time: {{ subgoal.time_planned }} minutes</option>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+            {% endif %}
+            </select>
+            <br><br>
+        <div class="form-group">
+            {% if subgoals == [] %}
+                <p>Add one <a href="/addgoal#:~:text=Add%20Subgoals%20Here">here.</a></p>
+            {% else %}
+            <input class="form-control" name="new_subgoal_name" placeholder="Replace Name" autocomplete="off" type="text">
+            <input class="form-control" name="new_subgoal_time" placeholder="Replace Time" type="number">
+            <button class="btn btn-primary" type="submit">Submit</button>
+            {% endif %}
+        </div>
+    </form>
+    <br><br>
+    <a href="/" class="btn button1" style="border: solid black">Back to main page</a>
+{% endblock %}

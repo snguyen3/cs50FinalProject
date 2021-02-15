@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!--To prevent people from navigating away from the timer page, the html of this page does not extend layout.html and instead uses html that is from layout.html but modified-->
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+
+        <!-- http://getbootstrap.com/docs/4.5/ -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+        <link href="/static/notef.ico" rel="icon">
+        <link href="/static/styles_slideshow.css" rel="stylesheet">
+        <link href="/static/styles.css" rel="stylesheet">
+
+        <!-- http://getbootstrap.com/docs/4.5/ -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+        <title>One Task A Time {% block title %}{% endblock %}</title>
+
+    </head>
+
+    <body>
+
+        <nav class="navbar navbar-expand-md navbar-light bg-light border">
+            <a class="navbar-brand"><span class="blue">One Task A Time</span></a>
+            <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbar" data-toggle="collapse" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar">
+                {% if not session.user_id %}
+                    <ul class="navbar-nav ml-auto mt-2">
+                        <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
+                    </ul>
+                {% endif %}
+            </div>
+        </nav>
+
+        {% if get_flashed_messages() %}
+            <header>
+                <div class="alert alert-primary border text-center" role="alert">
+                    {{ get_flashed_messages() | join(" ") }}
+                </div>
+            </header>
+        {% endif %}
+
+        <main class="container-fluid p-5">
+            <script>
+                // sets variable that will be the global count down variable
+                // cs50 ide gives a parsing error but the function works as intended
+                var countDown = {{ subgoal[0]["time_planned"] }} * 60 * 1000
+                // sets variable of total time planned that will remain constant for reference
+                var timePlanned = {{ subgoal[0]["time_planned"] }} * 60 * 1000;
+            </script>
+            <div>
+                <h2>{{ maingoal[0]["maingoal"] }}</h2>
+                <h3>{{ subgoal[0]["subgoal"] }}</h3>
+                <br>
+                <div class="timer-text" id="demo"></div>
+                <p hidden id="time_planned">{{ subgoal[0]["time_planned"] }}</p>
+                <br>
+                <button class="btn button1" onclick="pause()">Pause</button>
+                <button class="btn button1" onclick="start()">Start</button>
+                <form action="/timer" method="post">
+                    <input hidden type="number" name="subgoal_id" value="{{ subgoal_id }}">
+                    <input hidden type="number" name="total_time" id="total_time" value="test">
+                    <input class="btn button1 finish" onclick="get_time()" type="submit" value="Finished Task">
+                </form>
+                <br>
+                <a class="btn button1 stop" href="/">Stop Task</a>
+                <script src="/static/timer.js"></script>
+            </div>
+            <br><br>
+
+            <!-- Embed Spotify playlists -->
+            <div>
+                <p>Study Music Playlists</p>
+                <iframe src="https://open.spotify.com/embed/playlist/4lipzgtz9pwpGFCgyMO8sK" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                <iframe src="https://open.spotify.com/embed/playlist/2IUxd871Ji58B68jQYagwz" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DX8NTLI2TtZa6" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            </div>
+            <br><br>
+            <p>Timer Page Usage</p>
+            <p>Pause and Start: Use the pause to pause the timer if you are interrupted in the middle of a task and do not want it to count as part of the time spent doing your subgoal.</p>
+            <p>Finished Task: If you finish your task, click Finished Task to have it be recorded in your history and removed from your list.</p>
+            <p>Stop Task: If you need to change goals or no longer want the timer, click Stop Task to return back to the home page. The subgoal will NOT be removed and time will NOT be recorded.</p>
+            <p>If you navigate away from or refresh this page, your time will NOT be recorded and the subgoal will NOT be removed.</p>
+        </main>
+
+
+    </body>
+
+</html>
